@@ -67,6 +67,13 @@ func updatePlaylist(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	for _, file := range files {
+		err := pl.Add(file)
+		if err != nil {
+			return fmt.Errorf("error adding file %s to playlist: %w", file, err)
+		}
+	}
+
 	newBytes, err := xml.Marshal(pl)
 	if err != nil {
 		return fmt.Errorf("Error marshaling xml: %w", err)
