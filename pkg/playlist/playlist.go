@@ -38,6 +38,9 @@ func (pl *Playlist) Add(name string) error {
 	if err != nil {
 		return fmt.Errorf("error adding file %s: %w", name, err)
 	}
+
+	ind := strconv.Itoa(len(pl.TrackList.Track))
+
 	newTrack := Track{
 		Location: fmt.Sprintf("file:///%s", escapedPath),
 		Extension: struct {
@@ -45,14 +48,14 @@ func (pl *Playlist) Add(name string) error {
 			ID          string "xml:\"id\""
 		}{
 			Application: vlcPlaylistAppType,
-			ID:          strconv.Itoa(len(pl.TrackList.Track)),
+			ID:          ind,
 		},
 	}
 	pl.TrackList.Track = append(pl.TrackList.Track, newTrack)
 	pl.Extension.Item = append(pl.Extension.Item, struct {
 		Tid string "xml:\"tid,attr\""
 	}{
-		Tid: strconv.Itoa(len(pl.TrackList.Track)),
+		Tid: ind,
 	})
 
 	return nil
