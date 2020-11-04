@@ -67,7 +67,7 @@ func updatePlaylist(cmd *cobra.Command, args []string) error {
 		}
 	}
 
-	for _, file := range files {
+	for _, file := range fileToAdd {
 		err := pl.Add(file)
 		if err != nil {
 			return fmt.Errorf("error adding file %s to playlist: %w", file, err)
